@@ -44,17 +44,13 @@ def make_chains(contents):
     chains = {}
 
     words = contents.split()
-    new_list = []
 
     for i in range(len(words) - 2):
         new_pair = (words[i], words[i + 1])
-        if new_pair in chains.keys():
-            print('x')
-            chains[new_pair] = [chains[new_pair], words[i + 2]]
+        if new_pair not in chains.keys():
+            chains[new_pair] = []           
+        chains[new_pair].append(words[i + 2])
 
-        else:
-            chains[new_pair] = [words[i + 2]]
-            print('y')
         #new_list.append(new_pair)
         #chains[new_pair] = new_list.append(words[i + 2])
         # for each item in unique combos, 
