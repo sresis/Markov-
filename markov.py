@@ -3,6 +3,8 @@
 from random import choice
 
 import sys
+n_nome = int(input('Please input n-nome size: '))
+
 file = open(sys.argv[1])
 
 def open_and_read_file(file):
@@ -46,32 +48,53 @@ def make_chains(contents):
 
     words = contents.split()
 
-    for i in range(len(words) - 2):
-        new_pair = (words[i], words[i + 1])
-        if new_pair not in chains.keys():
-            chains[new_pair] = []           
-        chains[new_pair].append(words[i + 2])
-  
+    for i in range(len(words) - n_nome):
+        nnome_key = (words[i],)
+        j = i + 1
+        while j < (n_nome + i):
+            nnome_key = nnome_key + (words[j],)
+            j += 1
+    
+        if nnome_key not in chains.keys():
+            chains[nnome_key] = []           
+        chains[nnome_key].append(words[i + n_nome])
     return chains
+
 
 def make_text(chains):
     """Return text from chains."""
   # maybe make a function and re-refernece
     
     # this will start at random point in choice dict
-    key_val = choice(list(chains.keys()))
+    key_val = choice(list(chains.keys()),)
     # add on to list which each word pair
-    words_list = [key_val[0], key_val[1]]
+    words_list = []
+    i = 0
+    while i < n_nome:
+        words_list.append(key_val[i])
+        i += 1
+
     #new word to be selected (from values in dict)
     new_word = choice(chains[key_val])
-
-
+    final_key = ()
     # add to list while keys are valid
+    ## figure out how to pull index 1-n from key word, then add random word
     while new_word is not None:
-        key_val = (key_val[1], new_word)
+        i = 1
+        final_key = ()
+        while i < (n_nome ):
+            final_key = final_key + (key_val[i],)
+            i += 1
+        final_key = final_key + (new_word,)
+        print('x', final_key)
+
+
+
         words_list.append(new_word)
-        if key_val in chains.keys():
-            new_word = choice(chains[key_val])
+        if final_key in chains.keys():
+            new_word = choice(chains[final_key])
+            print('true')
+            key_val = final_key
         else:
             final_list = " ".join(words_list)
             return final_list
