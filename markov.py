@@ -77,8 +77,8 @@ def make_text(chains):
     #new word to be selected (from values in dict)
     new_word = choice(chains[key_val])
     final_key = ()
-    # add to list while keys are valid
-    ## figure out how to pull index 1-n from key word, then add random word
+
+    # updates keys and searches for value, until key not in dict    
     while new_word is not None:
         i = 1
         final_key = ()
@@ -86,14 +86,10 @@ def make_text(chains):
             final_key = final_key + (key_val[i],)
             i += 1
         final_key = final_key + (new_word,)
-        print('x', final_key)
-
-
 
         words_list.append(new_word)
         if final_key in chains.keys():
             new_word = choice(chains[final_key])
-            print('true')
             key_val = final_key
         else:
             final_list = " ".join(words_list)
