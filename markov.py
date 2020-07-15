@@ -13,6 +13,7 @@ def open_and_read_file(file):
     """
     contents = open(file).read()
 
+
     return contents
 
 
@@ -50,27 +51,35 @@ def make_chains(contents):
         if new_pair not in chains.keys():
             chains[new_pair] = []           
         chains[new_pair].append(words[i + 2])
-
-        #new_list.append(new_pair)
-        #chains[new_pair] = new_list.append(words[i + 2])
-        # for each item in unique combos, 
-        # add to to value all instances (following word)
-    print(chains)
-    
- 
-
-
+  
     return chains
-
 
 def make_text(chains):
     """Return text from chains."""
+  # maybe make a function and re-refernece
+    
+    # this will start at random point in choice dict
+    key_val = choice(list(chains.keys()))
+    # add on to list which each word pair
+    words_list = [key_val[0], key_val[1]]
+    #new word to be selected (from values in dict)
+    new_word = choice(chains[key_val])
 
-    words = []
 
-    # your code goes here
+    # add to list while keys are valid
+    while new_word is not None:
+        key_val = (key_val[1], new_word)
+        words_list.append(new_word)
+        if key_val in chains.keys():
+            new_word = choice(chains[key_val])
+        else:
+            final_list = " ".join(words_list)
+            return final_list
+  
+     
 
-    return " ".join(words)
+    
+   
 
 
 input_path = "green-eggs.txt"
